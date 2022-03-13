@@ -64,8 +64,6 @@ public class Player : MonoBehaviour
         }
 
 
-        print(municao);
-
     }
 
     private void Update()
