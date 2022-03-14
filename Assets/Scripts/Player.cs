@@ -17,6 +17,10 @@ public class Player : MonoBehaviour
     private KeyCode chargeAndShootKey = KeyCode.Mouse0;
     private int municao;
     private bool correr;
+    private bool travamouse;
+    private Vector3 diferrence;
+    private Vector3 alvo;
+    public GameObject inimigo_travado;
 
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -41,16 +45,32 @@ public class Player : MonoBehaviour
     {
         fisica = GetComponent<Rigidbody2D>();
         municao = 1;
+        travamouse = false;
     }
 
     private void FixedUpdate() 
     {
-        Vector3 diferrence = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-        diferrence.Normalize();
+       
+        
+
+
+
+        if (!travamouse)
+        {
+            alvo = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            alvo.Normalize();
+        }
+        else if (travamouse) 
+        {
+            alvo = inimigo_travado.transform.position - transform.position;
+            alvo.Normalize();
+        }
+
+        diferrence = alvo;
 
         float rotationZ = Mathf.Atan2(diferrence.y, diferrence.x) * Mathf.Rad2Deg;
 
-        transform.rotation = Quaternion.Euler(0f,0f, rotationZ);
+        transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
 
         if (!correr)
         {
@@ -85,6 +105,15 @@ public class Player : MonoBehaviour
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
             correr = false;
+        }
+
+        if (Input.GetKeyDown(KeyCode.P) && !travamouse)
+        {
+            travamouse = true;
+        }
+        else if (Input.GetKeyDown(KeyCode.P) && travamouse)
+        {
+            travamouse = false;
         }
 
 
