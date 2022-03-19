@@ -21,7 +21,11 @@ public class Player : MonoBehaviour
     private Vector3 diferrence;
     private Vector3 alvo;
     public GameObject inimigo_travado;
-
+    private bool dash;
+    public float dash_vel;
+    private bool contartempo;
+    private float contartempotmp;
+    public float stamina;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -46,24 +50,55 @@ public class Player : MonoBehaviour
         fisica = GetComponent<Rigidbody2D>();
         municao = 1;
         travamouse = false;
+        stamina = 50;
     }
 
     private void FixedUpdate() 
     {
-       
-        
-
-
 
         if (!travamouse)
         {
             alvo = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
             alvo.Normalize();
+
+            if (!correr)
+            {
+                Vector2 andar = new Vector2(Input.GetAxis("Horizontal") * velocidade, Input.GetAxis("Vertical") * velocidade);
+                fisica.velocity = andar;
+            }
+            if (correr)
+            {
+                Vector2 andar = new Vector2(Input.GetAxis("Horizontal") * velocidade * 2, Input.GetAxis("Vertical") * velocidade * 2);
+                fisica.velocity = andar;
+            }
+            if (dash)
+            {
+                contartempo = true;
+                Vector2 andar = new Vector2(Input.GetAxis("Horizontal") * velocidade * dash_vel, Input.GetAxis("Vertical") * velocidade * dash_vel);
+                fisica.velocity = andar;
+            }
         }
-        else if (travamouse) 
+        else if (travamouse)
         {
             alvo = inimigo_travado.transform.position - transform.position;
             alvo.Normalize();
+
+            if (!correr)
+            {
+                Vector2 andar = new Vector2(Input.GetAxis("Vertical") * velocidade * 15, Input.GetAxis("Horizontal") * velocidade * -15);
+                fisica.AddRelativeForce(andar);
+            }
+            if (correr)
+            {
+                Vector2 andar = new Vector2(Input.GetAxis("Vertical") * velocidade * 2 * 15, Input.GetAxis("Horizontal") * velocidade * 2 * -15);
+                fisica.AddRelativeForce(andar);
+            }
+            if (dash)
+            {
+                contartempo = true;
+                Vector2 andar = new Vector2(Input.GetAxis("Vertical") * velocidade * dash_vel * 10, Input.GetAxis("Horizontal") * velocidade * dash_vel * -10);
+                fisica.AddRelativeForce(andar);
+            }
         }
 
         diferrence = alvo;
@@ -72,22 +107,29 @@ public class Player : MonoBehaviour
 
         transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
 
-        if (!correr)
-        {
-            Vector2 andar = new Vector2(Input.GetAxis("Horizontal") * velocidade, Input.GetAxis("Vertical") * velocidade);
-            fisica.velocity = andar;
-        }
-        if (correr)
-        {
-            Vector2 andar = new Vector2(Input.GetAxis("Horizontal") * velocidade*2, Input.GetAxis("Vertical") * velocidade*2);
-            fisica.velocity = andar;
-        }
+        
 
 
     }
 
     private void Update()
     {
+        stamina = stamina + Time.deltaTime * 2;
+
+        if (stamina >= 50) {
+            stamina = 50;
+        }
+
+        //todo objeto que for ser atingido pelo raycast tem que ter algum tipo de collider
+        if (Input.GetKeyDown(KeyCode.Mouse2))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            if (hit.collider != null)
+            {
+                inimigo_travado = hit.collider.gameObject;
+            }
+        }
+
         if (Input.GetKey(chargeAndShootKey))
         {
             carregando += Time.deltaTime;
@@ -107,11 +149,29 @@ public class Player : MonoBehaviour
             correr = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.P) && !travamouse)
+
+        if (Input.GetKeyDown(KeyCode.Space) && stamina>10)
+        {
+            dash = true;
+            stamina = stamina - 10;
+        }
+
+        if (contartempo)
+        {
+            contartempotmp = contartempotmp+Time.deltaTime;    
+        }
+        if (contartempotmp > 0.2) 
+        {
+            contartempotmp = 0;
+            contartempo = false;
+            dash = false;   
+        }
+
+        if (Input.GetKeyDown(KeyCode.Mouse2) && !travamouse)
         {
             travamouse = true;
         }
-        else if (Input.GetKeyDown(KeyCode.P) && travamouse)
+        else if (Input.GetKeyDown(KeyCode.Mouse2) && travamouse)
         {
             travamouse = false;
         }
