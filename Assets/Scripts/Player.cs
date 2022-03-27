@@ -26,6 +26,7 @@ public class Player : MonoBehaviour
     private bool contartempo;
     private float contartempotmp;
     public float stamina;
+    public GameObject teste;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -58,7 +59,8 @@ public class Player : MonoBehaviour
 
         if (!travamouse)
         {
-            alvo = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            //alvo = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            alvo = teste.transform.position - transform.position;
             alvo.Normalize();
 
             if (!correr)
@@ -138,11 +140,11 @@ public class Player : MonoBehaviour
         {
             tirocarregado();
         }
-
-        if (Input.GetKeyDown(KeyCode.LeftShift)) 
+        /*
+        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetButton("Joystick1Button1")) 
         {
             correr = true;
-        }
+        }*/
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
