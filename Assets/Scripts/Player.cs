@@ -59,25 +59,25 @@ public class Player : MonoBehaviour
 
         if (!travamouse)
         {
-            //alvo = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-            alvo = teste.transform.position - transform.position;
+            alvo = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            //alvo = teste.transform.position - transform.position;
             alvo.Normalize();
 
             if (!correr)
             {
-                Vector2 andar = new Vector2(Input.GetAxis("Horizontal") * velocidade, Input.GetAxis("Vertical") * velocidade);
-                fisica.velocity = andar;
+                Vector2 andar = new Vector2(Input.GetAxis("Vertical") * velocidade * 15, Input.GetAxis("Horizontal") * velocidade * -15);
+                fisica.AddRelativeForce(andar);
             }
             if (correr)
             {
-                Vector2 andar = new Vector2(Input.GetAxis("Horizontal") * velocidade * 2, Input.GetAxis("Vertical") * velocidade * 2);
-                fisica.velocity = andar;
+                Vector2 andar = new Vector2(Input.GetAxis("Vertical") * velocidade * 2 * 15, Input.GetAxis("Horizontal") * velocidade * 2 * -15);
+                fisica.AddRelativeForce(andar);
             }
             if (dash)
             {
                 contartempo = true;
-                Vector2 andar = new Vector2(Input.GetAxis("Horizontal") * velocidade * dash_vel, Input.GetAxis("Vertical") * velocidade * dash_vel);
-                fisica.velocity = andar;
+                Vector2 andar = new Vector2(Input.GetAxis("Vertical") * velocidade * dash_vel * 10, Input.GetAxis("Horizontal") * velocidade * dash_vel * -10);
+                fisica.AddRelativeForce(andar);
             }
         }
         else if (travamouse)
