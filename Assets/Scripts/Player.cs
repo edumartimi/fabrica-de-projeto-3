@@ -26,7 +26,9 @@ public class Player : MonoBehaviour
     private bool contartempo;
     private float contartempotmp;
     public float stamina;
+    public float totalstamina;
     public GameObject teste;
+    private GameManager gerenciador;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -52,10 +54,12 @@ public class Player : MonoBehaviour
         municao = 1;
         travamouse = false;
         stamina = 50;
+        gerenciador = GetComponent<GameManager>();
     }
 
     private void FixedUpdate() 
     {
+       
 
         if (!travamouse)
         {
@@ -118,8 +122,8 @@ public class Player : MonoBehaviour
     {
         stamina = stamina + Time.deltaTime * 2;
 
-        if (stamina >= 50) {
-            stamina = 50;
+        if (stamina >= totalstamina) {
+            stamina = totalstamina;
         }
 
         //todo objeto que for ser atingido pelo raycast tem que ter algum tipo de collider
