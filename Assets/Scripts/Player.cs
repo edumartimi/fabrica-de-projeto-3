@@ -27,6 +27,7 @@ public class Player : MonoBehaviour
     private float contartempotmp;
     public float stamina;
     public float totalstamina;
+    private bool cansado;
     public GameObject teste;
     private GameManager gerenciador;
 
@@ -69,19 +70,19 @@ public class Player : MonoBehaviour
 
             if (!correr)
             {
-                Vector2 andar = new Vector2(Input.GetAxis("Vertical") * velocidade * 15, Input.GetAxis("Horizontal") * velocidade * -15);
-                fisica.AddRelativeForce(andar);
+                Vector2 andar = new Vector2(Input.GetAxis("Horizontal") * velocidade, Input.GetAxis("Vertical") * velocidade);
+                fisica.velocity = andar;
             }
             if (correr)
             {
-                Vector2 andar = new Vector2(Input.GetAxis("Vertical") * velocidade * 2 * 15, Input.GetAxis("Horizontal") * velocidade * 2 * -15);
-                fisica.AddRelativeForce(andar);
+                Vector2 andar = new Vector2(Input.GetAxis("Horizontal") * velocidade * 2, Input.GetAxis("Vertical") * velocidade * 2);
+                fisica.velocity = andar;
             }
             if (dash)
             {
                 contartempo = true;
-                Vector2 andar = new Vector2(Input.GetAxis("Vertical") * velocidade * dash_vel * 10, Input.GetAxis("Horizontal") * velocidade * dash_vel * -10);
-                fisica.AddRelativeForce(andar);
+                Vector2 andar = new Vector2(Input.GetAxis("Horizontal") * velocidade * dash_vel , Input.GetAxis("Vertical") * velocidade * dash_vel);
+                fisica.velocity = andar;
             }
         }
         else if (travamouse)
@@ -120,10 +121,22 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
-        stamina = stamina + Time.deltaTime * 2;
+        if (stamina < 0.5) 
+        {
+            cansado = true;
+            correr = false;
+        }
+        if (!cansado)
+        {
+            stamina = stamina + Time.deltaTime * 8;
+        }
+        else if(cansado){
+            stamina = stamina + Time.deltaTime * 4;
+        }
 
         if (stamina >= totalstamina) {
             stamina = totalstamina;
+            cansado = false;
         }
 
         //todo objeto que for ser atingido pelo raycast tem que ter algum tipo de collider
@@ -144,11 +157,16 @@ public class Player : MonoBehaviour
         {
             tirocarregado();
         }
-        /*
-        if (Input.GetKeyDown(KeyCode.LeftShift) || Input.GetButton("Joystick1Button1")) 
+
+        if (correr) 
+        {
+            stamina = stamina - Time.deltaTime*16;
+        }
+            
+        if (Input.GetKeyDown(KeyCode.LeftShift) && stamina>3)
         {
             correr = true;
-        }*/
+        }
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
         {
