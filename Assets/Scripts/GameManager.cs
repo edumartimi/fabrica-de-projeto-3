@@ -10,8 +10,11 @@ public class GameManager : MonoBehaviour
     public Scrollbar staminatela;
     private float porcstamina;
     public Player jogador;
-    void Start()
+    public bool controleativado;
+    public GameObject movimentocontrole;
+    void Awake()
     {
+        controleativado = false;
     }
 
     // Update is called once per frame
@@ -21,7 +24,12 @@ public class GameManager : MonoBehaviour
         valortotalstm = jogador.totalstamina;
         porcstamina = valoratualstm / valortotalstm;
         staminatela.size = porcstamina;
-        
+
+        if (Input.GetAxis("RightHorizontal") != 0 || Input.GetAxis("RightVertical") != 0 && !controleativado)
+        {
+            controleativado = true;
+            movimentocontrole.SetActive(true);
+        }
     }
 
 }

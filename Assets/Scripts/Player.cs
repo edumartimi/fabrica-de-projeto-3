@@ -28,8 +28,11 @@ public class Player : MonoBehaviour
     public float stamina;
     public float totalstamina;
     private bool cansado;
-    public GameObject teste;
-    private GameManager gerenciador;
+    public GameObject alvocontrole;
+    public GameObject gerenciador;
+    private float tempopararolamento;
+    public GameObject mouse_controle;
+
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
@@ -47,25 +50,27 @@ public class Player : MonoBehaviour
     }
 
 
-
-
     private void Start()
     {
         fisica = GetComponent<Rigidbody2D>();
         municao = 1;
         travamouse = false;
         stamina = 50;
-        gerenciador = GetComponent<GameManager>();
     }
 
     private void FixedUpdate() 
     {
-       
-
         if (!travamouse)
         {
-            alvo = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-            //alvo = teste.transform.position - transform.position;
+            if (gerenciador.GetComponent<GameManager>().controleativado)
+            {
+                alvo = alvocontrole.transform.position - transform.position;
+                Cursor.visible = false;
+            }
+            else
+            {
+                alvo = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
+            }
             alvo.Normalize();
 
             if (!correr)
@@ -139,10 +144,20 @@ public class Player : MonoBehaviour
             cansado = false;
         }
 
+
         //todo objeto que for ser atingido pelo raycast tem que ter algum tipo de collider
         if (Input.GetKeyDown(KeyCode.Mouse2))
         {
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
+            if (hit.collider != null)
+            {
+                inimigo_travado = hit.collider.gameObject;
+            }
+        }
+        
+        if (Input.GetButtonDown("Enable Debug Button 2"))
+        {
+            RaycastHit2D hit = Physics2D.Raycast(mouse_controle.transform.position, Vector2.zero);
             if (hit.collider != null)
             {
                 inimigo_travado = hit.collider.gameObject;
@@ -163,9 +178,26 @@ public class Player : MonoBehaviour
             stamina = stamina - Time.deltaTime*16;
         }
             
-        if (Input.GetKeyDown(KeyCode.LeftShift) && stamina>3)
+        if (Input.GetKeyDown(KeyCode.LeftShift)&& stamina>3)
         {
             correr = true;
+        }
+        if (Input.GetButton("Fire2")) 
+        {
+            correr = true;
+            dash = false;
+            tempopararolamento += Time.deltaTime;
+        }
+        if (Input.GetButtonUp("Fire2")) 
+        {
+            print(tempopararolamento);
+            correr = false;
+            if (tempopararolamento < 0.2f && stamina > 10)
+            {
+                dash = true;
+                stamina = stamina - 10; 
+            }
+            tempopararolamento = 0;
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
@@ -179,7 +211,8 @@ public class Player : MonoBehaviour
             dash = true;
             stamina = stamina - 10;
         }
-
+ 
+      
         if (contartempo)
         {
             contartempotmp = contartempotmp+Time.deltaTime;    
