@@ -43,12 +43,10 @@ Lançamento: Inverno de 2023
 
 
 
+# GDD For the honor of God
+7
 
-#GDD For the honor of God
-
-2
-
-![](Aspose.Words.0c875c68-db16-4bb4-9434-cfdee6819772.001.png "New Piskel (1)")
+![](Aspose.Words.231da2ae-2134-4594-861b-436d778adc83.001.png "New Piskel (1)")
 For the honor of God
 
 Para Windows 
@@ -67,7 +65,7 @@ Gameplay:
 
 ![Imagem de jogo de vídeo game
 
-Descrição gerada automaticamente com confiança baixa](Aspose.Words.0c875c68-db16-4bb4-9434-cfdee6819772.002.png)Com uma movimentação super dinâmica, For the honor of God é um jogo com câmera vista de cima para baixo, onde é necessário ter reflexos rápidos para desviar de ataques vindos de todas as direções e de vários inimigos diferentes (as vezes ao mesmo tempo).
+Descrição gerada automaticamente com confiança baixa](Aspose.Words.231da2ae-2134-4594-861b-436d778adc83.002.png)Com uma movimentação super dinâmica, For the honor of God é um jogo com câmera vista de cima para baixo, onde é necessário ter reflexos rápidos para desviar de ataques vindos de todas as direções e de vários inimigos diferentes (as vezes ao mesmo tempo).
 
 
 
@@ -77,7 +75,7 @@ No jogo, você controlara um cavaleiro templário, um guerreiro de grande fé em
 
 Porém, o principal inimigo do jogo também é forte, e além disso, ele é ardiloso, retira as suas forças de suas tropas, derrote-as, e ganhe armas adicionais que podem mudar totalmente a maneira com que você joga e, também te dar habilidades adicionais, te tornando mais parecido com o inimigo. 
 
-![](Aspose.Words.0c875c68-db16-4bb4-9434-cfdee6819772.003.png)
+![](Aspose.Words.231da2ae-2134-4594-861b-436d778adc83.003.png)
 
 
 
@@ -89,7 +87,7 @@ Porém, o principal inimigo do jogo também é forte, e além disso, ele é ardi
 
 Controles do jogador:
 
-![](Aspose.Words.0c875c68-db16-4bb4-9434-cfdee6819772.004.jpeg)De acordo com o estudo de prioridade de comandos, tentamos elaborar a melhor forma para os comandos não se chocarem e o jogador conseguir fazer todos os movimentos que precisar fluírem de uma maneira solida.Experiencia de jogo:
+![](Aspose.Words.231da2ae-2134-4594-861b-436d778adc83.004.jpeg)De acordo com o estudo de prioridade de comandos, tentamos elaborar a melhor forma para os comandos não se chocarem e o jogador conseguir fazer todos os movimentos que precisar fluírem de uma maneira solida.Experiencia de jogo:
 
 Viva como um cavaleiro templário. Use de toda a sua fé para derrotar todo tipo de criatura vindas do inferno.
 
@@ -99,74 +97,29 @@ Descanse: Sente-se em uma fogueira quentinha para recuperar as suas forças e fa
 
 Coma Carne: É ISSO MESMO, cace animais pelo mundo, sente-se na fogueira e aproveite uma boa carne.
 
+Enfrente Chefes: Em alguns locais determinados, você será desafiado por comandante do exército de seu inimigo, esses, são os chefes. As batalhas contra eles serão longas e difíceis pois eles têm muita vida e tem alta capacidade de dar dano. Caso você o derrote, você será contemplado com uma super benção.
+
 
 
 Mecânicas de Jogo:
 
-O jogo em For the honor of God é em uma vista isométrica de personagens, elementos e visão em 2D. A câmera pode ser aproximada focada no player e em mais um inimigo ao mesmo tempo, com um limite de distancia entre os dois. O jogador percorre o mapa em tempo real, lutando contra inimigos. Os jogadores de For the honor of God executam varias ações ao mesmo tempo, onde precisam as vezes desviar de vários ataques vindos de vários inimigos diferentes, e depois tendo que atacá-los. No curso do jogo, os controles continuam contextuais – tecnologias avançadas e melhorias de armas utilizam o mesmo esquema básico de controle. Após a batalha, qualquer safra que sobreviva é colhida automatica-mente e adicionada ao inventário do jogador para ser vendida durante a fase de venda. A fase de venda acontece em uma tela estática simples que também utiliza ativos do jogo. Os jogadores de Farm Wars podem pesquisar, comprar e construir defesas e ferramentas no curso do jogo. Cada item terá muitos níveis de melhorias, cada uma com um visual e efeito distinto. Diferentemente de muitos jogos, a tecnologia não suplanta a anterior, ape-nas se soma ao arsenal do jogador – o único fator limitante é a escolha do jogador e as finanças em qualquer um dos rounds.
-Um exemplo de progressão de tecnologia de defesa seria como:
+O jogo em For the honor of God é em uma vista isométrica de personagens, elementos e visão em 2D. A câmera pode ser aproximada focada no player e em mais um inimigo ao mesmo tempo, com um limite de distância entre os dois. O jogador percorre o mapa em tempo real, lutando contra inimigos. Os jogadores de For the honor of God executam varias ações ao mesmo tempo, onde precisam as vezes desviar de vários ataques vindos de vários inimigos diferentes, e depois tendo que atacá-los. No curso do jogo, os controles continuam contextuais – tecnologias avançadas e melhorias de armas utilizam o mesmo esquema básico de controle. Após cada batalha, é recebido um certo número de bênçãos que pode ser trocado por pontos de atributos em uma fogueira.
+
+
 
 Inimigos:
 
+Esqueleto: Almas que saíram do inferno e possuíram esqueletos só para te atormentar, elas são frágeis, mas tem um dano médio,
+
+Podem tentar te pegar de surpresa.
+
+Diabrete espada: O soldado do tinhoso, é literalmente um diabinho, ele tem vida e dano equilibrados, cuidado para não ser pego por um bando deles.
+
+Diabrete arco: O irmão do soldado do tinhoso, assim como seu irmão, ele é literalmente um diabinho, só que com um arco, o que por algum motivo faz ele ter menos vida, mas te dar mais danos. Normalmente ele vai ficar te atazanando de longe.
+
+Servo: É um ser humano que serve ao tinhoso, como faz por merecimento, ele é mais forte que o Diabrete. Normalmente atacara sozinho. Pode atacar tanto de espada quanto de arco. Cuidado, eles são mais inteligentes.
+
+Javali enfurecido: Não tem nada a ver com o tinhoso, só ficou bravo por você invadir o território dele. São fracos e burros, mas atacam em grandes bandos, se entrar no lugar errado pode não gostar do que vai encontrar.
 
 
-Material de Bônus:
-
-
-
-
-
-
-• Uma descrição em uma linha do funcionamento do jogo:
-
-RPG 2D com foco em movimentação, medieval, objetivo matar bosses.
-
-• Definição do seu gênero: RPG
-
-
-• Suas mecânicas principais (um conjunto de regras);
-
-Movimentação topdown WASD,
-
-Rolamento para fugir de ataques,
-
-Defesa com escudo que diminui o dano mas não o zera,
-
-ataque a distancia com lança e cajado,
-
-ataque melee com espada.
-
-
-• Uma breve descrição da história do jogo: Em busca de acabar com o invasor do reino. Controle o melhor cavaleiro templário do mundo, e enfrente demônios, até chegar a raiz do mal. 
-
-• Diferencial do jogo projetado em relação aos jogos da concorrência;
-
-Boa otimização.
-
-Sistema de conquistas recompensando o jogador.
-
-História inédita.
-
-Sistema de comunicação dentro do próprio jogo, onde outros jogadores podem deixar dicas por onde passaram a outros que vão passar por ali ainda.
-
-
-
-
-• Sistema operacional: Windows
-
-
-• O público alvo a ser alcançado e sua classificação indicativa permitida;
-
-Pessoas que gostam de jogos de RPG mas que não possuem um computador com grande processamento gráfico para joga-lo, 14 anos
-
-
-• Equipe necessária para o desenvolvimento e implementação;
-
-Programador, Level Designer, Artista digital, Game Designer.
-
-• Uma previsão de cronograma e orçamento do projeto.
-
-1.5milhões inverno
 For The Honor of God                       <eduardomartimiano@hotmail.com>                                       05/2022
-
-
