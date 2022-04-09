@@ -154,7 +154,7 @@ public class Player : MonoBehaviour
                 inimigo_travado = hit.collider.gameObject;
             }
         }
-        
+
         if (Input.GetButtonDown("Enable Debug Button 2"))
         {
             RaycastHit2D hit = Physics2D.Raycast(mouse_controle.transform.position, Vector2.zero);
@@ -224,11 +224,11 @@ public class Player : MonoBehaviour
             dash = false;   
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse2) && !travamouse)
+        if (Input.GetKeyDown(KeyCode.Mouse2) || Input.GetButtonDown("Enable Debug Button 2") && !travamouse)
         {
             travamouse = true;
         }
-        else if (Input.GetKeyDown(KeyCode.Mouse2) && travamouse)
+        else if (Input.GetKeyDown(KeyCode.Mouse2) || Input.GetButtonDown("Enable Debug Button 2") && travamouse)
         {
             travamouse = false;
         }
