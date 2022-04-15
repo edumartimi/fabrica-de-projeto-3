@@ -12,6 +12,8 @@ public class GameManager : MonoBehaviour
     public Player jogador;
     public bool controleativado;
     public GameObject movimentocontrole;
+    private bool pause;
+    public GameObject Menu;
     void Awake()
     {
         controleativado = false;
@@ -30,6 +32,21 @@ public class GameManager : MonoBehaviour
             controleativado = true;
             movimentocontrole.SetActive(true);
         }
+
+        if (Input.GetKeyDown(KeyCode.Escape) && !pause)
+        {
+            Menu.SetActive(true);
+            pause = true;
+            Time.timeScale = 0;
+        }
+        else if (Input.GetKeyDown(KeyCode.Escape) && pause)
+        {
+            Menu.SetActive(false);
+            pause = false;
+            Time.timeScale = 1;
+        }
+
+
     }
 
 }

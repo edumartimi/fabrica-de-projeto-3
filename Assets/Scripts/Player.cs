@@ -7,6 +7,9 @@ public class Player : MonoBehaviour
 
 
     private Rigidbody2D fisica;
+    public Animator animador;
+    public SpriteRenderer imgplayer;
+
     public int velocidade;
     public Transform posicaotiro;
     public GameObject bullet;
@@ -32,6 +35,11 @@ public class Player : MonoBehaviour
     public GameObject gerenciador;
     private float tempopararolamento;
     public GameObject mouse_controle;
+
+    private bool andarY;
+    private bool andarfrent;
+    private bool andarlat;
+    private bool andartras;
 
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -211,8 +219,48 @@ public class Player : MonoBehaviour
             dash = true;
             stamina = stamina - 10;
         }
- 
-      
+
+
+        if (System.Math.Abs(Input.GetAxis("Vertical")) > System.Math.Abs(Input.GetAxis("Horizontal")))
+        {
+            andarY = true;
+            andarlat = false;
+        }
+        else if (System.Math.Abs(Input.GetAxis("Vertical")) < System.Math.Abs(Input.GetAxis("Horizontal")))
+        {
+            andarY = false;
+            andarlat = true;
+        }
+        else if (System.Math.Abs(Input.GetAxis("Vertical")) == 1 && System.Math.Abs(Input.GetAxis("Horizontal")) == 1)
+        {
+            andarY = false;
+            andarlat = true;
+        }
+        else 
+        {
+            andarY = false;
+            andarlat = false;
+        }
+
+        animador.SetBool("and_frent", andarfrent);
+        animador.SetBool("and_lado", andarlat);
+        animador.SetBool("and_tras", andartras);
+
+
+
+
+        if (Input.GetAxis("Horizontal") > 0)
+        {
+            imgplayer.flipX = true;
+        }
+        else
+        {
+            imgplayer.flipX = false;
+        }
+
+
+
+
         if (contartempo)
         {
             contartempotmp = contartempotmp+Time.deltaTime;    
