@@ -20,9 +20,7 @@ public class Player : MonoBehaviour
     private KeyCode chargeAndShootKey = KeyCode.Mouse0;
     private int municao;
     private bool correr;
-    private bool travamouse;
     private Vector3 diferrence;
-    private Vector3 alvo;
     public GameObject inimigo_travado;
     private bool dash;
     public float dash_vel;
@@ -31,7 +29,6 @@ public class Player : MonoBehaviour
     public float stamina;
     public float totalstamina;
     private bool cansado;
-    public GameObject alvocontrole;
     public GameObject gerenciador;
     private float tempopararolamento;
     public GameObject mouse_controle;
@@ -40,6 +37,12 @@ public class Player : MonoBehaviour
     private bool andarfrent;
     private bool andarlat;
     private bool andartras;
+    private bool andardireita;
+    private bool andaresquerda;
+    private string direcao;
+    private bool idledir;
+    private bool idleesq;
+    private bool idlebai;
 
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -62,25 +65,11 @@ public class Player : MonoBehaviour
     {
         fisica = GetComponent<Rigidbody2D>();
         municao = 1;
-        travamouse = false;
         stamina = 50;
     }
 
     private void FixedUpdate() 
     {
-        if (!travamouse)
-        {
-            if (gerenciador.GetComponent<GameManager>().controleativado)
-            {
-                alvo = alvocontrole.transform.position - transform.position;
-                Cursor.visible = false;
-            }
-            else
-            {
-                alvo = Camera.main.ScreenToWorldPoint(Input.mousePosition) - transform.position;
-            }
-            alvo.Normalize();
-
             if (!correr)
             {
                 Vector2 andar = new Vector2(Input.GetAxis("Horizontal") * velocidade, Input.GetAxis("Vertical") * velocidade);
@@ -97,43 +86,12 @@ public class Player : MonoBehaviour
                 Vector2 andar = new Vector2(Input.GetAxis("Horizontal") * velocidade * dash_vel , Input.GetAxis("Vertical") * velocidade * dash_vel);
                 fisica.velocity = andar;
             }
-        }
-        else if (travamouse)
-        {
-            alvo = inimigo_travado.transform.position - transform.position;
-            alvo.Normalize();
-
-            if (!correr)
-            {
-                Vector2 andar = new Vector2(Input.GetAxis("Vertical") * velocidade * 15, Input.GetAxis("Horizontal") * velocidade * -15);
-                fisica.AddRelativeForce(andar);
-            }
-            if (correr)
-            {
-                Vector2 andar = new Vector2(Input.GetAxis("Vertical") * velocidade * 2 * 15, Input.GetAxis("Horizontal") * velocidade * 2 * -15);
-                fisica.AddRelativeForce(andar);
-            }
-            if (dash)
-            {
-                contartempo = true;
-                Vector2 andar = new Vector2(Input.GetAxis("Vertical") * velocidade * dash_vel * 10, Input.GetAxis("Horizontal") * velocidade * dash_vel * -10);
-                fisica.AddRelativeForce(andar);
-            }
-        }
-
-        diferrence = alvo;
-
-        float rotationZ = Mathf.Atan2(diferrence.y, diferrence.x) * Mathf.Rad2Deg;
-
-        transform.rotation = Quaternion.Euler(0f, 0f, rotationZ);
-
-        
-
-
     }
 
     private void Update()
     {
+        Cursor.visible = false;
+
         if (stamina < 0.5) 
         {
             cansado = true;
@@ -172,14 +130,6 @@ public class Player : MonoBehaviour
             }
         }
 
-        if (Input.GetKey(chargeAndShootKey))
-        {
-            carregando += Time.deltaTime;
-        }
-        if (Input.GetKeyUp(chargeAndShootKey))
-        {
-            tirocarregado();
-        }
 
         if (correr) 
         {
@@ -218,79 +168,131 @@ public class Player : MonoBehaviour
         {
             dash = true;
             stamina = stamina - 10;
+            animador.SetTrigger("cambalhota");
         }
-
-
-        if (System.Math.Abs(Input.GetAxis("Vertical")) > System.Math.Abs(Input.GetAxis("Horizontal")))
-        {
-            andarY = true;
-            andarlat = false;
-        }
-        else if (System.Math.Abs(Input.GetAxis("Vertical")) < System.Math.Abs(Input.GetAxis("Horizontal")))
-        {
-            andarY = false;
-            andarlat = true;
-        }
-        else if (System.Math.Abs(Input.GetAxis("Vertical")) == 1 && System.Math.Abs(Input.GetAxis("Horizontal")) == 1)
-        {
-            andarY = false;
-            andarlat = true;
-        }
-        else 
-        {
-            andarY = false;
-            andarlat = false;
-        }
-
-        animador.SetBool("and_frent", andarfrent);
-        animador.SetBool("and_lado", andarlat);
-        animador.SetBool("and_tras", andartras);
-
-
-
-
-        if (Input.GetAxis("Horizontal") > 0)
-        {
-            imgplayer.flipX = true;
-        }
-        else
-        {
-            imgplayer.flipX = false;
-        }
-
-
-
 
         if (contartempo)
         {
-            contartempotmp = contartempotmp+Time.deltaTime;    
+            contartempotmp = contartempotmp + Time.deltaTime;
         }
-        if (contartempotmp > 0.2) 
+        if (contartempotmp > 0.2)
         {
             contartempotmp = 0;
             contartempo = false;
-            dash = false;   
+            dash = false;
         }
 
-        if (Input.GetKeyDown(KeyCode.Mouse2) || Input.GetButtonDown("Enable Debug Button 2") && !travamouse)
-        {
-            travamouse = true;
-        }
-        else if (Input.GetKeyDown(KeyCode.Mouse2) || Input.GetButtonDown("Enable Debug Button 2") && travamouse)
-        {
-            travamouse = false;
-        }
+      
 
 
-        void tirocarregado()
+        if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Horizontal") == 0) 
         {
-            if (carregando >= prec_carregar && municao >0)
+            andarfrent = false;
+            andartras = false;
+            andardireita = false;
+            andaresquerda = false;
+        }
+
+        /*
+        if (Input.GetAxis("Vertical") != 0)
+        {
+            if (Input.GetAxis("Vertical") > 0)
             {
-                GameObject tmpbullet = Instantiate(bullet, posicaotiro.position, Quaternion.identity);
-                tmpbullet.GetComponent<Rigidbody2D>().AddForce(transform.right * bulletForce);
-                municao--;
+               
+                andartras = false;
             }
-            carregando = 0;
+            else
+            {
+                andarfrent = false;
+                andartras = true;
+            }
         }
+
+        if (Input.GetAxis("Horizontal") != 0)
+        {
+            if (Input.GetAxis("Horizontal") > 0)
+            {
+                andardireita = true;
+                andaresquerda = false;
+            }
+            else if (Input.GetAxis("Horizontal") < 0)
+            {
+                andardireita = false;
+                andaresquerda = true;
+            }
+        }
+        */
+       
+        animador.SetBool("and_frent", andarfrent);
+        animador.SetBool("and_tras", andartras);
+        animador.SetBool("and_direita", andardireita);
+        animador.SetBool("and_esquerda", andaresquerda);
+        animador.SetBool("idle_Down", idlebai);
+        animador.SetBool("idle_Left", idleesq);
+        animador.SetBool("idle_Right", idledir);
+
+
+        switch (direcao)
+        {
+            case "cima":
+                idledir = false;
+                idleesq = false;
+                idlebai = false;
+                break;
+            case "baixo":
+                idledir = false;
+                idleesq = false;
+                idlebai = true;
+                break;
+            case "esquerda":
+                idledir = false;
+                idleesq = true;
+                idlebai = false;
+
+                break;
+            case "direita":
+                idledir = true;
+                idleesq = false;
+                idlebai = false;
+
+                break;
+        }
+
+       
+
+
+        if (Input.GetKeyDown(KeyCode.UpArrow))
+        {
+            direcao = "cima";
+            andarfrent = true;
+            andartras = false;
+            andaresquerda = false;
+            andardireita = false;
+        }
+        if (Input.GetKeyDown(KeyCode.DownArrow))
+        {
+            direcao = "baixo";
+            andarfrent = false;
+            andartras = true;
+            andaresquerda = false;
+            andardireita = false;
+        }
+        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        {
+            direcao = "esquerda";
+            andarfrent = false;
+            andartras = false;
+            andaresquerda = true;
+            andardireita = false;
+        }
+        if (Input.GetKeyDown(KeyCode.RightArrow))
+        {
+            direcao = "direita";
+            andarfrent = false;
+            andartras = false;
+            andaresquerda = false;
+            andardireita = true;
+        }
+
     }
 }
