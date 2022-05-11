@@ -32,6 +32,8 @@ public class Player : MonoBehaviour
     public GameObject gerenciador;
     private float tempopararolamento;
     public GameObject mouse_controle;
+    public float vida;
+    public float totalvida;
 
     private bool andarY;
     private bool andarfrent;
@@ -43,6 +45,11 @@ public class Player : MonoBehaviour
     private bool idledir;
     private bool idleesq;
     private bool idlebai;
+
+    private bool invencibilidade;
+    private float tmp_invencivel;
+    public float time_invencivel;
+    private bool invencibilidade_dash;
 
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -58,14 +65,25 @@ public class Player : MonoBehaviour
             prec_carregar = 1f;
             Destroy(collision.gameObject);
         }
+
+        if (collision.gameObject.tag == "inimigo" && !invencibilidade) 
+        {
+            vida--;
+            invencibilidade = true;
+        }
     }
+
+   
 
 
     private void Start()
     {
+        invencibilidade = false;
+        totalvida = 10;
         fisica = GetComponent<Rigidbody2D>();
         municao = 1;
         stamina = 50;
+        vida = totalvida;
     }
 
     private void FixedUpdate() 
@@ -86,10 +104,65 @@ public class Player : MonoBehaviour
                 Vector2 andar = new Vector2(Input.GetAxis("Horizontal") * velocidade * dash_vel , Input.GetAxis("Vertical") * velocidade * dash_vel);
                 fisica.velocity = andar;
             }
+
+
+        if (invencibilidade)
+        {
+            tmp_invencivel = tmp_invencivel + Time.deltaTime;
+            if (tmp_invencivel > time_invencivel)
+            {
+                invencibilidade = false;
+                tmp_invencivel = 0;
+            }
+
+            for (float i = 0; tmp_invencivel > i; i += 0.5f)
+            {
+                if (imgplayer.color.a == 0.1f)
+                {
+                    imgplayer.color = new Color(255, 255, 255, 255);
+                }
+                else if (imgplayer.color.a == 255f)
+                {
+                    imgplayer.color = new Color(255, 255, 255, 0.1f);
+                }
+            }
+        }
+        else 
+        {
+            imgplayer.color = new Color(255, 255, 255, 255);
+        }
+
+
+        if (invencibilidade_dash)
+        {
+            tmp_invencivel = tmp_invencivel + Time.deltaTime;
+            if (tmp_invencivel > time_invencivel)
+            {
+                invencibilidade = false;
+                tmp_invencivel = 0;
+            }
+
+            for (float i = 0; tmp_invencivel > i; i += 0.5f)
+            {
+                if (imgplayer.color.a == 0.1f)
+                {
+                    imgplayer.color = new Color(255, 255, 255, 255);
+                }
+                else if (imgplayer.color.a == 255f)
+                {
+                    imgplayer.color = new Color(255, 255, 255, 0.1f);
+                }
+            }
+        }
+
     }
 
     private void Update()
     {
+        
+
+
+
         Cursor.visible = false;
 
         if (stamina < 0.5) 
@@ -148,7 +221,6 @@ public class Player : MonoBehaviour
         }
         if (Input.GetButtonUp("Fire2")) 
         {
-            print(tempopararolamento);
             correr = false;
             if (tempopararolamento < 0.2f && stamina > 10)
             {
@@ -168,7 +240,6 @@ public class Player : MonoBehaviour
         {
             dash = true;
             stamina = stamina - 10;
-            animador.SetTrigger("cambalhota");
         }
 
         if (contartempo)
@@ -182,7 +253,24 @@ public class Player : MonoBehaviour
             dash = false;
         }
 
-      
+        if (dash) 
+        {
+            switch (direcao)
+            {
+                case "cima":
+                    animador.SetTrigger("cambalhota_cim");
+                    break;
+                case "baixo":
+                    animador.SetTrigger("cambalhota_bai");
+                    break;
+                case "esquerda":
+                    animador.SetTrigger("cambalhota_esq");
+                    break;
+                case "direita":
+                    animador.SetTrigger("cambalhota_dir");
+                    break;
+            }
+        }
 
 
         if (Input.GetAxis("Vertical") == 0 && Input.GetAxis("Horizontal") == 0) 
@@ -227,41 +315,46 @@ public class Player : MonoBehaviour
         animador.SetBool("and_tras", andartras);
         animador.SetBool("and_direita", andardireita);
         animador.SetBool("and_esquerda", andaresquerda);
-        animador.SetBool("idle_Down", idlebai);
-        animador.SetBool("idle_Left", idleesq);
-        animador.SetBool("idle_Right", idledir);
+        animador.SetBool("idleDown", idlebai);
+        animador.SetBool("idleLeft", idleesq);
+        animador.SetBool("idleRight", idledir);
 
-
-        switch (direcao)
+        if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
         {
-            case "cima":
-                idledir = false;
-                idleesq = false;
-                idlebai = false;
-                break;
-            case "baixo":
-                idledir = false;
-                idleesq = false;
-                idlebai = true;
-                break;
-            case "esquerda":
-                idledir = false;
-                idleesq = true;
-                idlebai = false;
+            switch (direcao)
+            {
+                case "cima":
+                    idledir = false;
+                    idleesq = false;
+                    idlebai = false;
+                    break;
+                case "baixo":
+                    idledir = false;
+                    idleesq = false;
+                    idlebai = true;
+                    break;
+                case "esquerda":
+                    idledir = false;
+                    idleesq = true;
+                    idlebai = false;
 
-                break;
-            case "direita":
-                idledir = true;
-                idleesq = false;
-                idlebai = false;
+                    break;
+                case "direita":
+                    idledir = true;
+                    idleesq = false;
+                    idlebai = false;
 
-                break;
+                    break;
+            }
+        }
+        else 
+        {
+            idledir = false;
+            idleesq = false;
+            idlebai = false;
         }
 
-       
-
-
-        if (Input.GetKeyDown(KeyCode.UpArrow))
+        if (Input.GetAxis("Vertical") > 0)
         {
             direcao = "cima";
             andarfrent = true;
@@ -269,7 +362,7 @@ public class Player : MonoBehaviour
             andaresquerda = false;
             andardireita = false;
         }
-        if (Input.GetKeyDown(KeyCode.DownArrow))
+        if (Input.GetAxis("Vertical") < 0)
         {
             direcao = "baixo";
             andarfrent = false;
@@ -277,7 +370,7 @@ public class Player : MonoBehaviour
             andaresquerda = false;
             andardireita = false;
         }
-        if (Input.GetKeyDown(KeyCode.LeftArrow))
+        if (Input.GetAxis("Horizontal") < 0)
         {
             direcao = "esquerda";
             andarfrent = false;
@@ -285,7 +378,7 @@ public class Player : MonoBehaviour
             andaresquerda = true;
             andardireita = false;
         }
-        if (Input.GetKeyDown(KeyCode.RightArrow))
+        if (Input.GetAxis("Horizontal") > 0)
         {
             direcao = "direita";
             andarfrent = false;

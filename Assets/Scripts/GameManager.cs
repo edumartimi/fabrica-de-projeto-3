@@ -8,12 +8,14 @@ public class GameManager : MonoBehaviour
     private float valoratualstm;
     private float valortotalstm;
     public Scrollbar staminatela;
+    public Scrollbar vidaTela;
     private float porcstamina;
     public Player jogador;
     public bool controleativado;
     public GameObject movimentocontrole;
     private bool pause;
     public GameObject Menu;
+    private float porcvida;
     void Awake()
     {
         controleativado = false;
@@ -25,7 +27,9 @@ public class GameManager : MonoBehaviour
         valoratualstm = jogador.stamina;
         valortotalstm = jogador.totalstamina;
         porcstamina = valoratualstm / valortotalstm;
+        porcvida = jogador.vida / jogador.totalvida;
         staminatela.size = porcstamina;
+        vidaTela.size = porcvida;
 
         if (Input.GetAxis("RightHorizontal") != 0 || Input.GetAxis("RightVertical") != 0 && !controleativado)
         {

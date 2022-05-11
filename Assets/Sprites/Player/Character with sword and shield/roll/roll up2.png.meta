@@ -1,7 +1,10 @@
 fileFormatVersion: 2
 guid: 450a8248ce01ba748b156a8a639eb0db
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: -9214825951696212941
+    second: roll up2_0
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -125,7 +128,28 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: roll up2_0
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 24
+        width: 10
+        height: 14
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 33ca8128e9c5e1080800000000000000
+      internalID: -9214825951696212941
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

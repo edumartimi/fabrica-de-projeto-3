@@ -1,7 +1,10 @@
 fileFormatVersion: 2
 guid: 958e63401107e18408886533d03b6f23
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 4391111099518104874
+    second: roll left2_0
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -125,7 +128,28 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: roll left2_0
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 25
+        width: 10
+        height: 18
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: a253d08a74c50fc30800000000000000
+      internalID: 4391111099518104874
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []

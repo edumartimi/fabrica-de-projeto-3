@@ -1,7 +1,13 @@
 fileFormatVersion: 2
 guid: 96587d0b659489449af9857899005680
 TextureImporter:
-  internalIDToNameTable: []
+  internalIDToNameTable:
+  - first:
+      213: 6372820090498636424
+    second: roll down1_0
+  - first:
+      213: 5767152126865353052
+    second: roll down1_1
   externalObjects: {}
   serializedVersion: 11
   mipmaps:
@@ -125,7 +131,28 @@ TextureImporter:
     forceMaximumCompressionQuality_BC6H_BC7: 0
   spriteSheet:
     serializedVersion: 2
-    sprites: []
+    sprites:
+    - serializedVersion: 2
+      name: roll down1_0
+      rect:
+        serializedVersion: 2
+        x: 27
+        y: 25
+        width: 10
+        height: 16
+      alignment: 0
+      pivot: {x: 0, y: 0}
+      border: {x: 0, y: 0, z: 0, w: 0}
+      outline: []
+      physicsShape: []
+      tessellationDetail: 0
+      bones: []
+      spriteID: 88ad4af8b1ec07850800000000000000
+      internalID: 6372820090498636424
+      vertices: []
+      indices: 
+      edges: []
+      weights: []
     outline: []
     physicsShape: []
     bones: []
