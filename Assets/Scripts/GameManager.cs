@@ -42,12 +42,14 @@ public class GameManager : MonoBehaviour
             Menu.SetActive(true);
             pause = true;
             Time.timeScale = 0;
+            Cursor.visible = true;
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && pause)
         {
             Menu.SetActive(false);
             pause = false;
             Time.timeScale = 1;
+            Cursor.visible = false;
         }
 
 

@@ -46,10 +46,14 @@ public class Player : MonoBehaviour
     private bool idleesq;
     private bool idlebai;
 
+    private bool ataque;
+   
+
     private bool invencibilidade;
     private float tmp_invencivel;
     public float time_invencivel;
     private bool invencibilidade_dash;
+
 
 
     private void OnCollisionEnter2D(Collision2D collision)
@@ -138,20 +142,7 @@ public class Player : MonoBehaviour
             tmp_invencivel = tmp_invencivel + Time.deltaTime;
             if (tmp_invencivel > time_invencivel)
             {
-                invencibilidade = false;
                 tmp_invencivel = 0;
-            }
-
-            for (float i = 0; tmp_invencivel > i; i += 0.5f)
-            {
-                if (imgplayer.color.a == 0.1f)
-                {
-                    imgplayer.color = new Color(255, 255, 255, 255);
-                }
-                else if (imgplayer.color.a == 255f)
-                {
-                    imgplayer.color = new Color(255, 255, 255, 0.1f);
-                }
             }
         }
 
@@ -184,7 +175,38 @@ public class Player : MonoBehaviour
         }
 
 
+        if (Input.GetKeyDown(KeyCode.Mouse0))
+        {
+            ataque = true;
+        }
+        if (Input.GetKeyUp(KeyCode.Mouse0))
+        {
+            ataque = false;
+        }
+
+        if (ataque)
+        {
+            switch (direcao)
+            {
+                case "cima":
+                    animador.SetTrigger("ataque_up");
+                    break;
+                case "baixo":
+                    animador.SetTrigger("ataque_down");
+                    break;
+                case "esquerda":
+                    animador.SetTrigger("ataque_left");
+                    break;
+                case "direita":
+                    animador.SetTrigger("ataque_right");
+                    break;
+            }
+        }
+
+
+
         //todo objeto que for ser atingido pelo raycast tem que ter algum tipo de collider
+        /*
         if (Input.GetKeyDown(KeyCode.Mouse2))
         {
             RaycastHit2D hit = Physics2D.Raycast(Camera.main.ScreenToWorldPoint(Input.mousePosition), Vector2.zero);
@@ -202,7 +224,7 @@ public class Player : MonoBehaviour
                 inimigo_travado = hit.collider.gameObject;
             }
         }
-
+        */
 
         if (correr) 
         {

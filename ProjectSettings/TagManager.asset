@@ -7,14 +7,15 @@ TagManager:
   - lanca
   - bau
   - inimigo
+  - ataque
   layers:
   - Default
   - TransparentFX
   - Ignore Raycast
-  - 
+  - NPC
   - Water
   - UI
-  - 
+  - PAREDE
   - 
   - 
   - 
