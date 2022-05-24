@@ -70,14 +70,25 @@ public class Player : MonoBehaviour
             Destroy(collision.gameObject);
         }
 
-        if (collision.gameObject.tag == "inimigo" && !invencibilidade) 
+        /*if (collision.gameObject.tag == "inimigo" && !invencibilidade) 
+        {
+            vida--;
+            invencibilidade = true;
+        }*/
+
+     
+    }
+
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "hit_inimigo")
         {
             vida--;
             invencibilidade = true;
         }
     }
 
-   
+
 
 
     private void Start()

@@ -10,7 +10,7 @@ public class Esqueleto : MonoBehaviour
     public SpriteRenderer imgesqueleto;
     public Animator animador;
     private bool atacar;
-
+    private bool idle;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
@@ -18,6 +18,7 @@ public class Esqueleto : MonoBehaviour
         {
             Destroy(this.gameObject);
         }
+        
     }
 
     private void Start()
@@ -45,14 +46,22 @@ public class Esqueleto : MonoBehaviour
     private void FixedUpdate()
     {
         animador.SetBool("ataque", atacar);
-        if (Vector3.Distance(transform.position, player.transform.position) < 15 && Vector3.Distance(transform.position, player.transform.position) > 3)
+        animador.SetBool("idle", idle);
+        if (Vector3.Distance(transform.position, player.transform.position) < 15 && Vector3.Distance(transform.position, player.transform.position) > 1.8f)
         {
             moveCharacter(movement);
             atacar = false;
+            idle = false;
         }
-        else if (Vector3.Distance(transform.position, player.transform.position) < 3)
+        else if (Vector3.Distance(transform.position, player.transform.position) < 1.9f)
         {
             atacar = true;
+            idle = false;
+        }
+        else if (Vector3.Distance(transform.position, player.transform.position) > 15.5) 
+        {
+            idle = true;
+            
         }
     }
     void moveCharacter(Vector2 direction) 
