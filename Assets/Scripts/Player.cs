@@ -11,14 +11,6 @@ public class Player : MonoBehaviour
     public SpriteRenderer imgplayer;
 
     public int velocidade;
-    public Transform posicaotiro;
-    public GameObject bullet;
-    public int bulletForce;
-    public bool podeatirar;
-    public float carregando = 0f;
-    private float prec_carregar = 2f;
-    private KeyCode chargeAndShootKey = KeyCode.Mouse0;
-    private int municao;
     private bool correr;
     private Vector3 diferrence;
     public GameObject inimigo_travado;
@@ -31,7 +23,6 @@ public class Player : MonoBehaviour
     private bool cansado;
     public GameObject gerenciador;
     private float tempopararolamento;
-    public GameObject mouse_controle;
     public float vida;
     public float totalvida;
 
@@ -54,28 +45,11 @@ public class Player : MonoBehaviour
     public float time_invencivel;
     private bool invencibilidade_dash;
 
-
+    private AudioSource espadada;
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
-        if (collision.gameObject.tag == "lanca")
-        {
-            municao++;
-            Destroy(collision.gameObject);
-        }
-
-        if (collision.gameObject.tag == "bau")
-        {
-            prec_carregar = 1f;
-            Destroy(collision.gameObject);
-        }
-
-        /*if (collision.gameObject.tag == "inimigo" && !invencibilidade) 
-        {
-            vida--;
-            invencibilidade = true;
-        }*/
-
+       
      
     }
 
@@ -96,9 +70,10 @@ public class Player : MonoBehaviour
         invencibilidade = false;
         totalvida = 10;
         fisica = GetComponent<Rigidbody2D>();
-        municao = 1;
         stamina = 50;
         vida = totalvida;
+        espadada = GetComponent<AudioSource>();
+        Cursor.visible = false;
     }
 
     private void FixedUpdate() 
@@ -165,7 +140,6 @@ public class Player : MonoBehaviour
 
 
 
-        Cursor.visible = false;
 
         if (stamina < 0.5) 
         {
@@ -197,6 +171,7 @@ public class Player : MonoBehaviour
 
         if (ataque)
         {
+            espadada.Play();
             switch (direcao)
             {
                 case "cima":

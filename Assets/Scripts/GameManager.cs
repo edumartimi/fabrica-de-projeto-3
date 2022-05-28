@@ -39,10 +39,10 @@ public class GameManager : MonoBehaviour
 
         if (Input.GetKeyDown(KeyCode.Escape) && !pause)
         {
+            Cursor.visible = true;
             Menu.SetActive(true);
             pause = true;
             Time.timeScale = 0;
-            Cursor.visible = true;
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && pause)
         {
