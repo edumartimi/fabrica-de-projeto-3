@@ -75,7 +75,7 @@ No jogo, você controlara um cavaleiro templário, um guerreiro de grande fé em
 
 Porém, o principal inimigo do jogo também é forte, e além disso, ele é ardiloso, retira as suas forças de suas tropas, derrote-as, e ganhe armas adicionais que podem mudar totalmente a maneira com que você joga e, também te dar habilidades adicionais, te tornando mais parecido com o inimigo. 
 
-![](Aspose.Words.231da2ae-2134-4594-861b-436d778adc83.003.png)
+![](https://img.itch.zone/aW1hZ2UvOTE4NDI4LzUxOTI3MzMuZ2lm/original/b8TwLR.gif)
 
 
 
