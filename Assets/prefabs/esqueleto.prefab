@@ -1,5 +1,74 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
+--- !u!1 &904941323
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 904941324}
+  - component: {fileID: 904941325}
+  m_Layer: 0
+  m_Name: GameObject
+  m_TagString: hit_inimigo
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &904941324
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904941323}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_Children: []
+  m_Father: {fileID: 94313238369881506}
+  m_RootOrder: 0
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!60 &904941325
+PolygonCollider2D:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 904941323}
+  m_Enabled: 0
+  m_Density: 1
+  m_Material: {fileID: 0}
+  m_IsTrigger: 1
+  m_UsedByEffector: 0
+  m_UsedByComposite: 0
+  m_Offset: {x: 0, y: 0}
+  m_SpriteTilingProperty:
+    border: {x: 0, y: 0, z: 0, w: 0}
+    pivot: {x: 0, y: 0}
+    oldSize: {x: 0, y: 0}
+    newSize: {x: 0, y: 0}
+    adaptiveTilingThreshold: 0
+    drawMode: 0
+    adaptiveTiling: 0
+  m_AutoTiling: 0
+  m_Points:
+    m_Paths:
+    - - {x: -0.33140564, y: 1.3286399}
+      - {x: -0.9217148, y: 1.2103727}
+      - {x: -1.4170609, y: 0.76757514}
+      - {x: -0.92731476, y: 0.8054424}
+      - {x: -0.24973297, y: 0.82235456}
+      - {x: 0.31854337, y: 0.45632294}
+      - {x: 0.5058594, y: 0.21607322}
+      - {x: 0.868042, y: -0.63148767}
+      - {x: 0.7270799, y: -1.4181359}
+      - {x: 1.6737534, y: -1.4272547}
+      - {x: 1.4883957, y: 0.005183995}
+      - {x: 1.1857605, y: 0.59717697}
+      - {x: 0.5515585, y: 1.2137564}
 --- !u!1 &94313237696157452
 GameObject:
   m_ObjectHideFlags: 0
@@ -11,7 +80,7 @@ GameObject:
   - component: {fileID: 94313237696157442}
   - component: {fileID: 94313237696157443}
   - component: {fileID: 94313237696157453}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: esqueleto
   m_TagString: inimigo
   m_Icon: {fileID: 0}
@@ -48,6 +117,7 @@ MonoBehaviour:
   player: {fileID: 0}
   moveSpeed: 3
   imgesqueleto: {fileID: 94313238369881505}
+  animador: {fileID: 94313238369881504}
 --- !u!50 &94313237696157453
 Rigidbody2D:
   serializedVersion: 4
@@ -81,7 +151,7 @@ GameObject:
   - component: {fileID: 94313238369881505}
   - component: {fileID: 94313238369881504}
   - component: {fileID: 94313238369881507}
-  m_Layer: 0
+  m_Layer: 3
   m_Name: Skeleton Walk_0
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -96,9 +166,10 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 94313238369881517}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 1.413002, y: 0.34899998, z: 0}
+  m_LocalPosition: {x: 0.388, y: 0.029, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
-  m_Children: []
+  m_Children:
+  - {fileID: 904941324}
   m_Father: {fileID: 94313237696157442}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

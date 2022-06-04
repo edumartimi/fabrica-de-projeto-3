@@ -10,10 +10,12 @@ public class camera : MonoBehaviour
 {
     public Cinemachine.CinemachineTargetGroup targetbrain;
     private Camera mainCamera;
+    private AudioSource musica;
 
 
     private void Start()
     {
+        musica = GetComponent<AudioSource>();
         mainCamera = Camera.main;
     }
 

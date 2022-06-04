@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using UnityEngine.SceneManagement;
 
 public class GameManager : MonoBehaviour
 {
@@ -31,11 +32,7 @@ public class GameManager : MonoBehaviour
         staminatela.size = porcstamina;
         vidaTela.size = porcvida;
 
-        if (Input.GetAxis("RightHorizontal") != 0 || Input.GetAxis("RightVertical") != 0 && !controleativado)
-        {
-            controleativado = true;
-            movimentocontrole.SetActive(true);
-        }
+       
 
         if (Input.GetKeyDown(KeyCode.Escape) && !pause)
         {
@@ -46,13 +43,28 @@ public class GameManager : MonoBehaviour
         }
         else if (Input.GetKeyDown(KeyCode.Escape) && pause)
         {
-            Menu.SetActive(false);
-            pause = false;
-            Time.timeScale = 1;
-            Cursor.visible = false;
+            voltar_ao_jogo();
         }
 
 
+    }
+
+    public void voltar_ao_menu() 
+    {
+        SceneManager.LoadScene("Menu");
+    }
+
+    public void voltar_ao_jogo()
+    {
+        Menu.SetActive(false);
+        pause = false;
+        Time.timeScale = 1;
+        Cursor.visible = false;
+    }
+
+    public void reiniciar() 
+    {
+        SceneManager.LoadScene("Mundo");
     }
 
 }

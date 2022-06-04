@@ -47,11 +47,17 @@ public class Player : MonoBehaviour
     private bool idlebai;
 
     private bool ataque;
+    private bool defesa;
+
+    public GameObject telamorte;
+
+    public AudioSource espadada;
    
 
     private bool invencibilidade;
     private float tmp_invencivel;
     public float time_invencivel;
+    public float time_invencivel_dash;
     private bool invencibilidade_dash;
 
 
@@ -94,11 +100,14 @@ public class Player : MonoBehaviour
     private void Start()
     {
         invencibilidade = false;
-        totalvida = 10;
+        totalvida = 5;
         fisica = GetComponent<Rigidbody2D>();
         municao = 1;
         stamina = 50;
         vida = totalvida;
+        Cursor.visible = false;
+        Time.timeScale = 1;
+
     }
 
     private void FixedUpdate() 
@@ -123,11 +132,14 @@ public class Player : MonoBehaviour
 
         if (invencibilidade)
         {
+            
+            gameObject.layer = 7;
             tmp_invencivel = tmp_invencivel + Time.deltaTime;
             if (tmp_invencivel > time_invencivel)
             {
                 invencibilidade = false;
                 tmp_invencivel = 0;
+                gameObject.layer = 0;
             }
 
             for (float i = 0; tmp_invencivel > i; i += 0.5f)
@@ -141,6 +153,7 @@ public class Player : MonoBehaviour
                     imgplayer.color = new Color(255, 255, 255, 0.1f);
                 }
             }
+            
         }
         else 
         {
@@ -150,10 +163,14 @@ public class Player : MonoBehaviour
 
         if (invencibilidade_dash)
         {
+            print("invensivel");
+            gameObject.layer = 7;
             tmp_invencivel = tmp_invencivel + Time.deltaTime;
-            if (tmp_invencivel > time_invencivel)
+            if (tmp_invencivel > time_invencivel_dash)
             {
+                invencibilidade_dash = false;
                 tmp_invencivel = 0;
+                gameObject.layer = 0;
             }
         }
 
@@ -161,12 +178,16 @@ public class Player : MonoBehaviour
 
     private void Update()
     {
+        if (vida <= 0) 
+        {
+            telamorte.SetActive(true);
+            Time.timeScale = 0;
+            Cursor.visible = true;
+        }
         
 
 
-
-        Cursor.visible = false;
-
+       
         if (stamina < 0.5) 
         {
             cansado = true;
@@ -189,6 +210,7 @@ public class Player : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.Mouse0))
         {
             ataque = true;
+            espadada.Play();
         }
         if (Input.GetKeyUp(KeyCode.Mouse0))
         {
@@ -214,6 +236,25 @@ public class Player : MonoBehaviour
             }
         }
 
+
+        if (defesa)
+        {
+            switch (direcao)
+            {
+                case "cima":
+                    animador.SetTrigger("def_up");
+                    break;
+                case "baixo":
+                    animador.SetTrigger("def_down");
+                    break;
+                case "esquerda":
+                    animador.SetTrigger("def_left");
+                    break;
+                case "direita":
+                    animador.SetTrigger("def_right");
+                    break;
+            }
+        }
 
 
         //todo objeto que for ser atingido pelo raycast tem que ter algum tipo de collider
@@ -252,13 +293,14 @@ public class Player : MonoBehaviour
             dash = false;
             tempopararolamento += Time.deltaTime;
         }
-        if (Input.GetButtonUp("Fire2")) 
+        if (Input.GetButtonUp("Fire2") || Input.GetKeyDown(KeyCode.Space)) 
         {
             correr = false;
             if (tempopararolamento < 0.2f && stamina > 10)
             {
                 dash = true;
-                stamina = stamina - 10; 
+                stamina = stamina - 10;
+                invencibilidade_dash = true;
             }
             tempopararolamento = 0;
         }
@@ -273,6 +315,16 @@ public class Player : MonoBehaviour
         {
             dash = true;
             stamina = stamina - 10;
+        }
+
+        if (Input.GetKeyDown(KeyCode.LeftControl)) 
+        {
+            defesa = true;
+        }
+
+        if (Input.GetKeyUp(KeyCode.LeftControl))
+        {
+            defesa = false;
         }
 
         if (contartempo)
