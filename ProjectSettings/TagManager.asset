@@ -9,6 +9,7 @@ TagManager:
   - inimigo
   - ataque
   - hit_inimigo
+  - penhasco
   layers:
   - Default
   - TransparentFX

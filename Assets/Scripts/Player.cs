@@ -8,6 +8,7 @@ public class Player : MonoBehaviour
 
     private Rigidbody2D fisica;
     public Animator animador;
+    public Animator animadorsemespada;
     public SpriteRenderer imgplayer;
 
     public int velocidade;
@@ -60,10 +61,16 @@ public class Player : MonoBehaviour
     public float time_invencivel_dash;
     private bool invencibilidade_dash;
 
+    public bool podedash;
+    public bool podeatacar;
+
+    public GameObject txtpenhasco;
+
 
 
     private void OnCollisionEnter2D(Collision2D collision)
     {
+        
         if (collision.gameObject.tag == "lanca")
         {
             municao++;
@@ -82,7 +89,21 @@ public class Player : MonoBehaviour
             invencibilidade = true;
         }*/
 
+        if (collision.gameObject.tag == "podedash") 
+        {
+            podedash = true;
+        }
+
+       
      
+    }
+
+    private void OnCollisionStay2D(Collision2D collision)
+    {
+        if (collision.gameObject.tag == "penhasco")
+        {
+            txtpenhasco.SetActive(true);
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -122,12 +143,28 @@ public class Player : MonoBehaviour
                 Vector2 andar = new Vector2(Input.GetAxis("Horizontal") * velocidade * 2, Input.GetAxis("Vertical") * velocidade * 2);
                 fisica.velocity = andar;
             }
+        if (podedash)
+        {
             if (dash)
             {
                 contartempo = true;
-                Vector2 andar = new Vector2(Input.GetAxis("Horizontal") * velocidade * dash_vel , Input.GetAxis("Vertical") * velocidade * dash_vel);
+                Vector2 andar = new Vector2(Input.GetAxis("Horizontal") * velocidade * dash_vel, Input.GetAxis("Vertical") * velocidade * dash_vel);
                 fisica.velocity = andar;
             }
+
+            if (invencibilidade_dash)
+            {
+                print("invensivel");
+                gameObject.layer = 7;
+                tmp_invencivel = tmp_invencivel + Time.deltaTime;
+                if (tmp_invencivel > time_invencivel_dash)
+                {
+                    invencibilidade_dash = false;
+                    tmp_invencivel = 0;
+                    gameObject.layer = 0;
+                }
+            }
+        }
 
 
         if (invencibilidade)
@@ -161,18 +198,8 @@ public class Player : MonoBehaviour
         }
 
 
-        if (invencibilidade_dash)
-        {
-            print("invensivel");
-            gameObject.layer = 7;
-            tmp_invencivel = tmp_invencivel + Time.deltaTime;
-            if (tmp_invencivel > time_invencivel_dash)
-            {
-                invencibilidade_dash = false;
-                tmp_invencivel = 0;
-                gameObject.layer = 0;
-            }
-        }
+        txtpenhasco.SetActive(false);
+       
 
     }
 
@@ -206,15 +233,38 @@ public class Player : MonoBehaviour
             cansado = false;
         }
 
+        if (podeatacar)
+        {
+            if (Input.GetKeyDown(KeyCode.Mouse0))
+            {
+                ataque = true;
+                espadada.Play();
+            }
+            if (Input.GetKeyUp(KeyCode.Mouse0))
+            {
+                ataque = false;
+            }
 
-        if (Input.GetKeyDown(KeyCode.Mouse0))
-        {
-            ataque = true;
-            espadada.Play();
-        }
-        if (Input.GetKeyUp(KeyCode.Mouse0))
-        {
-            ataque = false;
+
+            if (defesa)
+            {
+                switch (direcao)
+                {
+                    case "cima":
+                        animador.SetTrigger("def_up");
+                        break;
+                    case "baixo":
+                        animador.SetTrigger("def_down");
+                        break;
+                    case "esquerda":
+                        animador.SetTrigger("def_left");
+                        break;
+                    case "direita":
+                        animador.SetTrigger("def_right");
+                        break;
+                }
+            }
+
         }
 
         if (ataque)
@@ -237,24 +287,7 @@ public class Player : MonoBehaviour
         }
 
 
-        if (defesa)
-        {
-            switch (direcao)
-            {
-                case "cima":
-                    animador.SetTrigger("def_up");
-                    break;
-                case "baixo":
-                    animador.SetTrigger("def_down");
-                    break;
-                case "esquerda":
-                    animador.SetTrigger("def_left");
-                    break;
-                case "direita":
-                    animador.SetTrigger("def_right");
-                    break;
-            }
-        }
+        
 
 
         //todo objeto que for ser atingido pelo raycast tem que ter algum tipo de collider
@@ -293,16 +326,27 @@ public class Player : MonoBehaviour
             dash = false;
             tempopararolamento += Time.deltaTime;
         }
-        if (Input.GetButtonUp("Fire2") || Input.GetKeyDown(KeyCode.Space)) 
+
+        if (podedash)
         {
-            correr = false;
-            if (tempopararolamento < 0.2f && stamina > 10)
+            if (Input.GetButtonUp("Fire2") || Input.GetKeyDown(KeyCode.Space))
+            {
+                correr = false;
+                if (tempopararolamento < 0.2f && stamina > 10)
+                {
+                    dash = true;
+                    stamina = stamina - 10;
+                    invencibilidade_dash = true;
+                }
+                tempopararolamento = 0;
+            }
+
+
+            if (Input.GetKeyDown(KeyCode.Space) && stamina > 10)
             {
                 dash = true;
                 stamina = stamina - 10;
-                invencibilidade_dash = true;
             }
-            tempopararolamento = 0;
         }
 
         if (Input.GetKeyUp(KeyCode.LeftShift))
@@ -311,11 +355,6 @@ public class Player : MonoBehaviour
         }
 
 
-        if (Input.GetKeyDown(KeyCode.Space) && stamina>10)
-        {
-            dash = true;
-            stamina = stamina - 10;
-        }
 
         if (Input.GetKeyDown(KeyCode.LeftControl)) 
         {
@@ -403,6 +442,17 @@ public class Player : MonoBehaviour
         animador.SetBool("idleDown", idlebai);
         animador.SetBool("idleLeft", idleesq);
         animador.SetBool("idleRight", idledir);
+
+
+
+
+        animadorsemespada.SetBool("and_frent", andarfrent);
+        animadorsemespada.SetBool("and_tras", andartras);
+        animadorsemespada.SetBool("and_direita", andardireita);
+        animadorsemespada.SetBool("and_esquerda", andaresquerda);
+        animadorsemespada.SetBool("idleDown", idlebai);
+        animadorsemespada.SetBool("idleLeft", idleesq);
+        animadorsemespada.SetBool("idleRight", idledir);
 
         if (Input.GetAxis("Horizontal") == 0 && Input.GetAxis("Vertical") == 0)
         {

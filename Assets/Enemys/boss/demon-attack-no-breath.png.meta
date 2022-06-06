@@ -130,12 +130,12 @@ TextureImporter:
       name: demon-attack-no-breath_0
       rect:
         serializedVersion: 2
-        x: 0
+        x: 20
         y: 0
-        width: 192
-        height: 176
-      alignment: 9
-      pivot: {x: 0.5058312, y: 0.5308971}
+        width: 160
+        height: 144
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -151,12 +151,12 @@ TextureImporter:
       name: demon-attack-no-breath_1
       rect:
         serializedVersion: 2
-        x: 192
+        x: 204
         y: 0
-        width: 192
-        height: 176
-      alignment: 9
-      pivot: {x: 0.5474817, y: 0.40367374}
+        width: 160
+        height: 144
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -172,12 +172,12 @@ TextureImporter:
       name: demon-attack-no-breath_2
       rect:
         serializedVersion: 2
-        x: 384
+        x: 389
         y: 0
-        width: 192
-        height: 176
-      alignment: 9
-      pivot: {x: 0.5574778, y: 0.35187566}
+        width: 160
+        height: 144
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -193,12 +193,12 @@ TextureImporter:
       name: demon-attack-no-breath_3
       rect:
         serializedVersion: 2
-        x: 576
+        x: 589
         y: 0
-        width: 192
-        height: 176
-      alignment: 9
-      pivot: {x: 0.5116622, y: 0.5027262}
+        width: 160
+        height: 144
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -214,12 +214,12 @@ TextureImporter:
       name: demon-attack-no-breath_4
       rect:
         serializedVersion: 2
-        x: 768
+        x: 794
         y: 0
-        width: 192
-        height: 176
-      alignment: 9
-      pivot: {x: 0.6474431, y: 0.47637275}
+        width: 160
+        height: 144
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -235,12 +235,12 @@ TextureImporter:
       name: demon-attack-no-breath_5
       rect:
         serializedVersion: 2
-        x: 960
+        x: 978
         y: 0
-        width: 192
-        height: 176
-      alignment: 9
-      pivot: {x: 0.639946, y: 0.45092812}
+        width: 160
+        height: 144
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
@@ -256,13 +256,13 @@ TextureImporter:
       name: demon-attack-no-breath_6
       rect:
         serializedVersion: 2
-        x: 1152
-        y: 0
-        width: 192
-        height: 176
-      alignment: 9
-      pivot: {x: 0.44418845, y: 0.50817865}
-      border: {x: 0, y: 0, z: 0, w: 0}
+        x: 1173
+        y: 6
+        width: 160
+        height: 161
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
+      border: {x: 0, y: 0, z: 0, w: 3}
       outline: []
       physicsShape: []
       tessellationDetail: 0
@@ -277,12 +277,12 @@ TextureImporter:
       name: demon-attack-no-breath_7
       rect:
         serializedVersion: 2
-        x: 1344
-        y: 0
-        width: 192
-        height: 176
-      alignment: 9
-      pivot: {x: 0.44252267, y: 0.49909124}
+        x: 1359
+        y: 8
+        width: 160
+        height: 154
+      alignment: 0
+      pivot: {x: 0.5, y: 0.5}
       border: {x: 0, y: 0, z: 0, w: 0}
       outline: []
       physicsShape: []
