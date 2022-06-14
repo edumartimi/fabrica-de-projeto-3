@@ -10,6 +10,8 @@ public class Player : MonoBehaviour
     public Animator animador;
     public Animator animadorsemespada;
     public SpriteRenderer imgplayer;
+    public GameObject playerarmado;
+    public GameObject playerdesarmado;
 
     public int velocidade;
     public Transform posicaotiro;
@@ -65,6 +67,16 @@ public class Player : MonoBehaviour
     public bool podeatacar;
 
     public GameObject txtpenhasco;
+    public GameObject txtvoltar;
+
+    public bool apertex;
+    public GameObject armaaas;
+    private bool armado;
+    public GameObject tutorial;
+    public GameObject tutorial_dash;
+    private bool aperteXdash;
+
+    public float aumentardano;
 
 
 
@@ -89,11 +101,11 @@ public class Player : MonoBehaviour
             invencibilidade = true;
         }*/
 
-        if (collision.gameObject.tag == "podedash") 
-        {
-            podedash = true;
-        }
 
+        if (collision.gameObject.tag == "boss") 
+        {
+            vida = vida - 5;
+        }
        
      
     }
@@ -104,6 +116,22 @@ public class Player : MonoBehaviour
         {
             txtpenhasco.SetActive(true);
         }
+
+        if (collision.gameObject.tag == "voltar")
+        {
+            txtvoltar.SetActive(true);
+        }
+
+
+    }
+
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (collision.gameObject.tag == "armas")
+        {
+            armaaas = null;
+            apertex = false;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -113,6 +141,28 @@ public class Player : MonoBehaviour
             vida--;
             invencibilidade = true;
         }
+        if (collision.gameObject.tag == "armas")
+        {
+            armaaas = collision.gameObject;
+            apertex = true;
+            tutorial.SetActive(true);
+        }
+
+        if (collision.gameObject.tag == "aumenta_dano") 
+        {
+            aumentardano = aumentardano + 3;
+            Destroy(collision.gameObject);
+        }
+
+
+        if (collision.gameObject.tag == "podedash")
+        {
+            armaaas = collision.gameObject;
+            aperteXdash = true;
+            tutorial_dash.SetActive(true);
+            podedash = true;
+        }
+
     }
 
 
@@ -121,14 +171,13 @@ public class Player : MonoBehaviour
     private void Start()
     {
         invencibilidade = false;
-        totalvida = 5;
+        totalvida = 10;
         fisica = GetComponent<Rigidbody2D>();
         municao = 1;
         stamina = 50;
         vida = totalvida;
-        Cursor.visible = false;
-        Time.timeScale = 1;
-
+        apertex = false;
+        armado = false;
     }
 
     private void FixedUpdate() 
@@ -199,12 +248,33 @@ public class Player : MonoBehaviour
 
 
         txtpenhasco.SetActive(false);
-       
+        txtvoltar.SetActive(false);
 
     }
 
     private void Update()
     {
+        if (aperteXdash)
+        {
+            if (Input.GetKeyDown(KeyCode.X))
+            {
+                Destroy(armaaas);
+                podedash = true;
+                tutorial_dash.SetActive(false);
+            }
+        }
+
+        if (apertex) 
+        {
+            if (Input.GetKeyDown(KeyCode.X)) 
+            {
+                Destroy(armaaas);
+                armado = true;
+                tutorial.SetActive(false);
+            }
+        }
+
+
         if (vida <= 0) 
         {
             telamorte.SetActive(true);
@@ -269,6 +339,7 @@ public class Player : MonoBehaviour
 
         if (ataque)
         {
+            
             switch (direcao)
             {
                 case "cima":
@@ -286,7 +357,12 @@ public class Player : MonoBehaviour
             }
         }
 
-
+        if (armado) 
+        {
+            playerarmado.SetActive(true);
+            playerdesarmado.SetActive(false);
+            podeatacar = true;
+        }
         
 
 

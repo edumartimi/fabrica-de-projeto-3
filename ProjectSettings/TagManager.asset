@@ -10,6 +10,12 @@ TagManager:
   - ataque
   - hit_inimigo
   - penhasco
+  - voltar
+  - armas
+  - atk_inimigo
+  - boss
+  - podedash
+  - aumenta_dano
   layers:
   - Default
   - TransparentFX

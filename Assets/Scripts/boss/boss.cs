@@ -16,16 +16,20 @@ public class boss : MonoBehaviour
     private float vida;
     private bool tanadireita;
     private bool tanaesquerda;
-    public GameObject fogo;
     private bool jafez;
     private bool jafez2;
     private float tempo;
+    public colisor colisao;
+    private GameManager gerenciador;
+    private float dano;
+    public Player jogador;
+    public GameObject telafinal;
 
     private void OnTriggerEnter2D(Collider2D collision)
     {
         if (collision.gameObject.tag == "ataque")
         {
-            vida--;
+            vida = vida - dano;
         }
 
     }
@@ -36,12 +40,16 @@ public class boss : MonoBehaviour
         vida = totalvida;
         fisica = GetComponent<Rigidbody2D>();
         player = GameObject.FindWithTag("Player").GetComponent<Transform>();
+        dano = 1;
     }
     private void Update()
     {
+        dano = dano + jogador.aumentardano;
+
         if (vida <= 0) 
         {
             Destroy(this.gameObject);
+            telafinal.SetActive(true);
         }
 
         Vector3 direction = player.position - transform.position;
@@ -77,33 +85,30 @@ public class boss : MonoBehaviour
 
         direction.Normalize();
         movement = direction;
+
+        
     }
 
     private void FixedUpdate()
     {
+        moveCharacter(movement);
+
         animador.SetBool("ataque", atacar);
         animador.SetBool("idle", idle);
-        if (Vector3.Distance(transform.position, player.transform.position) < 50 && Vector3.Distance(transform.position, player.transform.position) > 6.9f)
+        if (colisao.playertocou)
         {
-            moveCharacter(movement);
-            atacar = false;
-            fogo.SetActive(false);
-        }
-        else if (Vector3.Distance(transform.position, player.transform.position) < 7f)
-        {
-            atacar = true;
-            
-            tempo = tempo + Time.deltaTime;
-            if (tempo >= 1)
-            {
-                fogo.SetActive(true);
-                tempo = 0;
-            }
 
+            moveSpeed = 15;
+        }
+        else 
+        {
+            moveSpeed = 5;
         }
     }
     void moveCharacter(Vector2 direction)
     {
         fisica.MovePosition((Vector2)transform.position + (direction * moveSpeed * Time.deltaTime));
     }
+
+
 }

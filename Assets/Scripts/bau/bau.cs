@@ -4,15 +4,10 @@ using UnityEngine;
 
 public class bau : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    public GameObject espada_escudo;
+    private void OnTriggerEnter2D(Collider2D collision)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        Instantiate(espada_escudo,transform.position,transform.rotation);
+        Destroy(this.gameObject);
     }
 }

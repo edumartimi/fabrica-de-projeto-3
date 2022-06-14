@@ -17,9 +17,17 @@ public class GameManager : MonoBehaviour
     private bool pause;
     public GameObject Menu;
     private float porcvida;
+    public GameObject prologo;
     void Awake()
     {
         controleativado = false;
+        prologo.SetActive(true);
+        Cursor.visible = true;
+    }
+
+    private void Start()
+    {
+        Time.timeScale = 0;
     }
 
     // Update is called once per frame
@@ -56,11 +64,14 @@ public class GameManager : MonoBehaviour
 
     public void voltar_ao_jogo()
     {
+        prologo.SetActive(false);
         Menu.SetActive(false);
         pause = false;
         Time.timeScale = 1;
         Cursor.visible = false;
     }
+
+    
 
     public void reiniciar() 
     {
